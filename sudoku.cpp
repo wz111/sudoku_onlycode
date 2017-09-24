@@ -56,36 +56,6 @@ int main(int argc,char** argv)
 
 		do
 		{
-			if (linestr == "\n" || line == 9)
-			{
-				//Solve the sudoku
-				ss.setPuzzle(bufferMartix);
-				ss.setFlag(bufferFlag);
-				if (ss.Fill(0)) 
-				{
-					//$to do: find an efficent way to output to file
-					for (int j = 0; j < 81; j++)
-					{
-						outfile << ss.getPuzzle()[j];
-						if ((j + 1) % 9 == 0)
-						{
-							outfile << '\n';
-							continue;
-						}
-						if (j < 81)
-						{
-							outfile << ' ';
-						}
-					}
-					outfile << '\n';
-				}
-				memset(bufferFlag, 0, sizeof(int)*81);
-				memset(bufferMartix, 0, sizeof(int)*81);
-				ss.setPuzzle(bufferMartix);
-				count = 0;
-				line = 0;
-				continue;
-			}
 			for (int i = 0; linestr[i] != '\0'; i++) 
 			{
 				if (linestr[i] >= '0' && linestr[i] <= '9') 
@@ -107,6 +77,37 @@ int main(int argc,char** argv)
 				}
 			}
 			line++;
+			if (linestr == "\n\0" || line == 9)
+			{
+				//Solve the sudoku
+				ss.setPuzzle(bufferMartix);
+				ss.setFlag(bufferFlag);
+				if (ss.Fill(0))
+				{
+					//$to do: find an efficent way to output to file
+					for (int j = 0; j < 81; j++)
+					{
+						outfile << ss.getPuzzle()[j];
+						if ((j + 1) % 9 == 0)
+						{
+							outfile << '\n';
+							continue;
+						}
+						if (j < 81)
+						{
+							outfile << ' ';
+						}
+					}
+					outfile << '\n';
+				}
+				memset(bufferFlag, 0, sizeof(int) * 81);
+				memset(bufferMartix, 0, sizeof(int) * 81);
+				ss.setPuzzle(bufferMartix);
+				ss.setFlag(bufferFlag);
+				count = 0;
+				line = -1;
+				continue;
+			}
 		} while (getline(strStr, linestr));
 		cout << "Solved Sudoku!" << endl;
 	}

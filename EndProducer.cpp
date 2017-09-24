@@ -16,6 +16,7 @@ EndProducer::EndProducer(int Nums)
 
 EndProducer::~EndProducer()
 {
+	;
 }
 
 void EndProducer::Swap(int* a, int* b) 
@@ -35,6 +36,11 @@ bool EndProducer::DuplicateCheck(int* a, int aim, int count)
 			return true;
 	}
 	return false;
+}
+
+int* EndProducer::getInitialSeed() 
+{
+	return _initialSeed;
 }
 
 int* EndProducer::Row123(int* a)
@@ -196,11 +202,11 @@ int* EndProducer::Row987(int* a)
     return a;
 }
 
-void EndProducer::IndexSubstitution(int* seed, int* a, int* b)
+void EndProducer::IndexSubstitution(int* seed, int* a, int* b, int len)
 {    
 	int i;
 	//int result[81] = { 0 };
-    for( i = 0 ; i < NUM_POINT ; i++ )
+    for( i = 0 ; i < len ; i++ )
 	{
 		int temp = a[i];
 		b[i] = seed[temp - 1];
@@ -238,20 +244,25 @@ void EndProducer::SetOriginMartix(int* seed)
 
 void EndProducer::MainOperation()
 {
-	int* OriMartixCopy;
-	int* MiddleMartix1;
-	int* MiddleMartix2;
-	int* EndMartix;
+	int* OriMartixCopy = NULL;
+	int* MiddleMartix1 = NULL;
+	int* MiddleMartix2 = NULL;
+	int* EndMartix = NULL;
 	int palaceVary1 = 0;
 	int palaceVary2 = 0;
 	int palaceVary3 = 0;
 	int param = 0;
 	int martixCount = 0;
-	ofstream outfile;
-	outfile.open("sudoku.txt");
+	FILE* outfile;
+	errno_t err;
+	if ((err = fopen_s(&outfile, "sudoku.txt", "w")) != 0)
+	{
+		printf("Unable to open sudoku.txt\n");
+		exit(1);
+	}
 
 	SeedInitialRandom();
-	IndexSubstitution(_initialSeed, _ancestorMartix, _originalMartix);
+	IndexSubstitution(_initialSeed, _ancestorMartix, _originalMartix, NUM_POINT);
 	//_originalMartix = _ancestorMartix;
 	
 	do 
@@ -261,7 +272,7 @@ void EndProducer::MainOperation()
 		int count = 0;
 		int* OriMarRowCopy;
 		OriMartixCopy = _originalMartix;
-		IndexSubstitution(_seed, OriMartixCopy, OriMartixCopy);
+		IndexSubstitution(_seed, OriMartixCopy, OriMartixCopy, NUM_POINT);
 		//$to do: figure out the reason of the srand() cost tooooooooo much time!!!
 		srand((unsigned)time(NULL));
 
@@ -342,23 +353,24 @@ void EndProducer::MainOperation()
 				break;
 			}
 
-			for(int j = 0 ; j < NUM_POINT ; j++)
+			int m = 0;
+			char temp[325];
+			for(int j = 0 ; j < NUM_POINT ; j++, m+=2)
 			{
-				outfile << EndMartix[j];
+				temp[m] = EndMartix[j] + '0';
 				if ((j + 1) % 9 == 0) 
 				{
-					outfile << '\n';
+					temp[m + 1] = '\n';
 					continue;
 				}
-				if (j < NUM_POINT)
-				{
-					outfile << ' ';
-				}
+				temp[m + 1] = ' ';
 			}
-			outfile << '\n';
+			temp[m] = '\n';
+			temp[m + 1] = '\0';
+			fputs(temp, outfile);
 			martixCount++;
 		}
 	} while (next_permutation(_seed, _seed + 8) && martixCount < Nums );
-	outfile.close();
+	fclose(outfile);
 
 }

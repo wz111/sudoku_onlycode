@@ -46,8 +46,9 @@ public:
 	int* Row978(int* a);
 	int* Row987(int* a);
 
+	int* getInitialSeed();
 	void SeedInitialRandom();
-	void IndexSubstitution(int* seed, int* a, int* b);
+	void IndexSubstitution(int* seed, int* a, int* b, int len);
 	void MainOperation();
 	bool DuplicateCheck(int* a, int aim, int count);
 	void Swap(int* a, int* b);
