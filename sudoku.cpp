@@ -77,7 +77,7 @@ int main(int argc,char** argv)
 				}
 			}
 			line++;
-			if (linestr == "\n\0" || line == 9)
+			if (linestr == "\n" || line == 9)
 			{
 				//Solve the sudoku
 				ss.setPuzzle(bufferMartix);
@@ -110,6 +110,68 @@ int main(int argc,char** argv)
 			}
 		} while (getline(strStr, linestr));
 		cout << "Solved Sudoku!" << endl;
+	}
+	else if (argv[1][0] == '-' && argv[1][1] == 't') {
+		string filepath;
+		string buffer;
+		string linestr;
+		int zeroNum = -1;
+		int zero_Count = 0;
+		int zero_index = -1;
+		int line = 0;
+		filepath = argv[2];
+
+		fstream infile(filepath.c_str());
+		fstream outfile(filepath.c_str());
+		if (!infile)
+		{
+			cout << "Unable to open the file. Exit" << endl;
+			exit(1);
+		}
+		buffer.assign(istreambuf_iterator<char>(infile), istreambuf_iterator<char>());
+		stringstream strStr;
+		strStr.str(buffer);
+
+		srand((unsigned)time(NULL));
+		while (getline(strStr, linestr))
+		{
+			if (linestr[0] >= '1' && linestr[0] <= '9')
+			{
+				zeroNum = (rand() % 3) + 4;
+				zero_Count = 0;
+				while (true)
+				{
+					if (zero_Count < zeroNum)
+					{
+						if (line % 10 == 0)
+						{
+							zero_index = (rand() % 8) + 1;
+						}
+						else
+						{
+							zero_index = rand() % 9;
+						}
+						if (linestr[2 * zero_index] == '0')
+						{
+							continue;
+						}
+						linestr[2 * zero_index] = '0';
+						zero_Count++;
+					}
+					else
+					{
+						outfile << linestr;
+						outfile << "\n";
+						break;
+					}
+				}
+			}
+			else 
+			{
+				outfile << "\n";
+			}
+			line++;
+		}
 	}
 
 	finish = clock();
