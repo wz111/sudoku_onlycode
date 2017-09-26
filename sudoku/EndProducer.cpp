@@ -253,6 +253,7 @@ void EndProducer::MainOperation()
 	int palaceVary3 = 0;
 	int param = 0;
 	int martixCount = 0;
+	
 	FILE* outfile;
 	errno_t err;
 	
@@ -261,6 +262,7 @@ void EndProducer::MainOperation()
 		printf("Unable to open sudoku.txt\n");
 		exit(1);
 	}
+	
 	/*
 	ofstream out;
 	out.open("sudoku.txt");

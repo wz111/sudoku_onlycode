@@ -35,6 +35,10 @@ int main(int argc,char** argv)
 			string whitespace = "";
 			regex_replace(buf, argv[2], argv[2]+strlen(argv[2]), addSign, whitespace);
 			Nums = atoi(buf);
+			if (Nums > 1000000 || Nums < 1) 
+			{
+				cout << "The Paramter must be positive!! Exit......" << endl;
+			}
 			EndProducer EP(Nums);
 			EP.MainOperation();
 			cout << Nums << " sudokus have been produced!" << endl;
@@ -53,7 +57,7 @@ int main(int argc,char** argv)
 		filepath = argv[2];
 
 		fstream infile(filepath.c_str());
-		fstream outfile(filepath.c_str());
+		fstream outfile("sudoku.txt");
 		if (!infile)
 		{
 			cout << "Unable to open the file. Exit" << endl;

@@ -294,15 +294,6 @@ namespace UnitTest1
 				Assert::AreNotEqual(*(arr1 + i), arr[i]);
 			}
 		}
-		TEST_METHOD(End_Test_SeedInitialRandom) 
-		{
-			EndProducer ep(12);
-			int arr[9] = { 1,2,3,4,5,6,7,8,9 };
-			ep.SeedInitialRandom();
-			for (int i = 0; i < 9; i++) {
-				Assert::AreNotEqual(*(ep.getInitialSeed() + i), arr[i]);
-			}
-		}
 		TEST_METHOD(End_Test_IndexIndexSubstitution) 
 		{
 			EndProducer ep(12);
