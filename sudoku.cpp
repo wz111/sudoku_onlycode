@@ -8,6 +8,7 @@
 #include <fstream>
 #include <time.h>
 #include <string>
+#include <regex>
 #include <sstream>
 
 using namespace std;
@@ -20,15 +21,23 @@ int main(int argc,char** argv)
 
 	if (argv[1][0] == '-' && argv[1][1] == 'c')
 	{
-		int Nums = atoi(argv[2]);
-		if (Nums < 1 || Nums > 1000000) 
+		const regex pattern("\\+*\\d+");
+		bool isValid = regex_match(argv[2], pattern);
+		int Nums = -1;
+		if (!isValid) 
 		{
-			cout << "The Paramter must be positive[1, 10^6]!! Program exit abnormally......" << endl;
+			cout << "The Paramter must be positive!! Exit......" << endl;
 		}
 		else 
 		{
+			char buf[50] = { 0 };
+			std::regex addSign("\\+");
+			string whitespace = "";
+			regex_replace(buf, argv[2], argv[2]+strlen(argv[2]), addSign, whitespace);
+			Nums = atoi(buf);
 			EndProducer EP(Nums);
 			EP.MainOperation();
+			cout << Nums << " sudokus have been produced!" << endl;
 		}
 	}
 	else if (argv[1][0] == '-' && argv[1][1] == 's')

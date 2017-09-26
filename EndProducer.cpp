@@ -255,12 +255,16 @@ void EndProducer::MainOperation()
 	int martixCount = 0;
 	FILE* outfile;
 	errno_t err;
+	
 	if ((err = fopen_s(&outfile, "sudoku.txt", "w")) != 0)
 	{
 		printf("Unable to open sudoku.txt\n");
 		exit(1);
 	}
-
+	/*
+	ofstream out;
+	out.open("sudoku.txt");
+	*/
 	SeedInitialRandom();
 	IndexSubstitution(_initialSeed, _ancestorMartix, _originalMartix, NUM_POINT);
 	//_originalMartix = _ancestorMartix;
@@ -368,9 +372,23 @@ void EndProducer::MainOperation()
 			temp[m] = '\n';
 			temp[m + 1] = '\0';
 			fputs(temp, outfile);
+			/*for(int j = 0;j<NUM_POINT;j++)
+			{
+				out << EndMartix[j];
+				if ((j + 1) % 9 == 0) 
+				{
+					out << "\n";
+					continue;
+				}
+				if (j < NUM_POINT) 
+				{
+					out << ' ';
+				}
+				out << '\n';
+			}*/
 			martixCount++;
 		}
 	} while (next_permutation(_seed, _seed + 8) && martixCount < Nums );
-	fclose(outfile);
+	//fclose(outfile);
 
 }
