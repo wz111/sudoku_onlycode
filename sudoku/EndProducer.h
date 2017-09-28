@@ -4,6 +4,9 @@
 #define MAX_NUM_ROWSUB 72
 #define NUM_POINT 81
 #define NUM_ROW 9
+#define Type123 1
+#define Type456 4
+#define Type789 7
 
 using namespace std;
 
@@ -29,22 +32,7 @@ private:
 public:
 	EndProducer(int Nums);
 	~EndProducer();
-	int* Row123(int* a);
-	int* Row132(int* a);
-
-	int* Row456(int* a);
-	int* Row465(int* a);
-	int* Row546(int* a);
-	int* Row564(int* a);
-	int* Row645(int* a);
-	int* Row654(int* a);
-
-	int* Row789(int* a);
-	int* Row798(int* a);
-	int* Row879(int* a);
-	int* Row897(int* a);
-	int* Row978(int* a);
-	int* Row987(int* a);
+	void RowSwap(int* srcMartix, int Type, int* rank);
 
 	int* getInitialSeed();
 	void SeedInitialRandom();

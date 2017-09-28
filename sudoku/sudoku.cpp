@@ -42,6 +42,7 @@ int main(int argc,char** argv)
 			EndProducer EP(Nums);
 			EP.MainOperation();
 			cout << Nums << " sudokus have been produced!" << endl;
+
 		}
 	}
 	else if (argv[1][0] == '-' && argv[1][1] == 's')
