@@ -58,10 +58,15 @@ int main(int argc,char** argv)
 		filepath = argv[2];
 
 		fstream infile(filepath.c_str());
-		fstream outfile("sudoku.txt");
+		ofstream outfile("sudoku.txt");
 		if (!infile)
 		{
 			cout << "Unable to open the file. Exit" << endl;
+			exit(1);
+		}
+		if (!outfile)
+		{
+			cout << "Unable to write the file. Exit" << endl;
 			exit(1);
 		}
 		buffer.assign(istreambuf_iterator<char>(infile), istreambuf_iterator<char>());
