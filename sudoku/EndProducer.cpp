@@ -5,6 +5,7 @@
 #include "algorithm"
 #include "iostream"
 #include "fstream"
+#include "set"
 
 using namespace std;
 
@@ -169,7 +170,17 @@ void EndProducer::SeedInitialRandom()
 	}
 }
 
-void EndProducer::MainOperation()
+void EndProducer::SudokuCheck(char temp[])
+{
+	string a(temp);
+	endSet.insert(a);
+}
+int EndProducer::getendSetNum() 
+{
+	return endSet.size();
+}
+
+void EndProducer::MainOperation(bool checkOption)
 {
 	int rank123[3] = { 1,2,3 };
 	int rank132[3] = { 1,3,2 };
@@ -193,9 +204,9 @@ void EndProducer::MainOperation()
 	int martixCount = 0;
 	
 	FILE* outfile;
-	FILE* readfile;
+	//FILE* readfile;
 	errno_t err1;
-	errno_t err2;
+	//errno_t err2;
 	
 	if ((err1 = fopen_s(&outfile, "sudoku.txt", "w")) != 0)
 	{
@@ -314,6 +325,9 @@ void EndProducer::MainOperation()
 			temp[m] = '\n';
 			temp[m + 1] = '\0';
 			std::fputs(temp, outfile);
+			if (checkOption) {
+				SudokuCheck(temp);
+			}
 			/*for(int j = 0;j<NUM_POINT;j++)
 			{
 				out << EndMartix[j];
@@ -334,38 +348,15 @@ void EndProducer::MainOperation()
 	} while (next_permutation(_seed, _seed + 8) && martixCount < Nums );
 
 	std::fclose(outfile);
-	if ((err2 = fopen_s(&readfile, "sudoku.txt", "r")) != 0)
-	{
-		printf("Unable to open sudoku.txt\n");
-		exit(1);
-	}
-	char linestr[20];
-	int rowline = 0;
-	int rowNum = 0;
-	int rowNumArr[100] = { 0 };
-	int count = 0;
-	while (fgets(linestr, 20, readfile)!=NULL) {
-		if (rowline == 9) 
+	if (checkOption) {
+		if (Nums != getendSetNum())
 		{
-			if (!DuplicateCheck(rowNumArr, rowNum, count)) 
-			{
-				rowNumArr[count++] = rowNum;
-				rowline = 0;
-				rowNum = 0;
-				//cout << "Duplicate Check Success!!!" << endl;
-			}
-			else
-			{
-				cout << "Duplicate Check Failed!!" << endl;
-			}
+			cout << "duplicate" << endl;
 		}
 		else
 		{
-			if (linestr[0] >= '1' && linestr[0] <= '9') 
-			{
-				rowNum = rowNum * 10 + linestr[0] - '0';
-				rowline++;
-			}
+			cout << "not duplicate" << endl;
 		}
 	}
+	else;
 }

@@ -40,7 +40,7 @@ int main(int argc,char** argv)
 				cout << "The Paramter must be positive!! Exit......" << endl;
 			}
 			EndProducer EP(Nums);
-			EP.MainOperation();
+			EP.MainOperation(NotCheck);
 			cout << Nums << " sudokus have been produced!" << endl;
 
 		}
@@ -58,7 +58,7 @@ int main(int argc,char** argv)
 		filepath = argv[2];
 
 		fstream infile(filepath.c_str());
-		ofstream outfile("sudoku.txt");
+		ofstream outfile("sudoku.txt"/*, std::ofstream::binary*/);
 		if (!infile)
 		{
 			cout << "Unable to open the file. Exit" << endl;
@@ -104,20 +104,28 @@ int main(int argc,char** argv)
 				if (ss.Fill(0))
 				{
 					//$to do: find an efficent way to output to file
-					for (int j = 0; j < 81; j++)
+					int m = 0;
+					char temp[325];
+					for (int j = 0; j < 81; j++, m+=2)
 					{
-						outfile << ss.getPuzzle()[j];
+						temp[m] = ss.getPuzzle()[j] + '0';
+						//outfile << ss.getPuzzle()[j];
 						if ((j + 1) % 9 == 0)
 						{
-							outfile << '\n';
+							temp[m + 1] = '\n';
+							//outfile << '\n';
 							continue;
 						}
 						if (j < 81)
 						{
-							outfile << ' ';
+							temp[m + 1] = ' ';
+							//outfile << ' ';
 						}
 					}
-					outfile << '\n';
+					temp[m] = '\n';
+					temp[m + 1] = '\0';
+					outfile.write(temp, strlen(temp));
+					//outfile << '\n';
 				}
 				memset(bufferFlag, 0, sizeof(int) * 81);
 				memset(bufferMartix, 0, sizeof(int) * 81);

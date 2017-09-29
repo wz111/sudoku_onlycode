@@ -1,4 +1,6 @@
 #pragma once
+#include "set"
+#include "string"
 #ifndef ENDPRODUCER_H_
 #define ENDPRODUCER_H_
 #define MAX_NUM_ROWSUB 72
@@ -7,6 +9,8 @@
 #define Type123 1
 #define Type456 4
 #define Type789 7
+#define Check true
+#define NotCheck false
 
 using namespace std;
 
@@ -28,16 +32,19 @@ private:
 	int _seed[NUM_ROW] = { 2,4,5,6,1,8,7,3,9 };
 	int _initialSeed[NUM_ROW] = { 0 };
 	int Nums;
+	set<string> endSet;
 
 public:
 	EndProducer(int Nums);
 	~EndProducer();
 	void RowSwap(int* srcMartix, int Type, int* rank);
+	void SudokuCheck(char temp[]);
+	int getendSetNum();
 
 	int* getInitialSeed();
 	void SeedInitialRandom();
 	void IndexSubstitution(int* seed, int* a, int* b, int len);
-	void MainOperation();
+	void MainOperation(bool checkOption);
 	bool DuplicateCheck(int* a, int aim, int count);
 	void Swap(int* a, int* b);
 
