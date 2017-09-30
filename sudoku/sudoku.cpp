@@ -1,4 +1,4 @@
-// sudoku.cpp:
+// sudokuonlycode.cpp:
 //
 
 #include "stdafx.h"
@@ -40,9 +40,8 @@ int main(int argc,char** argv)
 				cout << "The Paramter must be positive!! Exit......" << endl;
 			}
 			EndProducer EP(Nums);
-			EP.MainOperation(NotCheck);
+			EP.MainOperation();
 			cout << Nums << " sudokus have been produced!" << endl;
-
 		}
 	}
 	else if (argv[1][0] == '-' && argv[1][1] == 's')
@@ -58,15 +57,10 @@ int main(int argc,char** argv)
 		filepath = argv[2];
 
 		fstream infile(filepath.c_str());
-		ofstream outfile("sudoku.txt"/*, std::ofstream::binary*/);
+		ofstream outfile("sudoku.txt");
 		if (!infile)
 		{
 			cout << "Unable to open the file. Exit" << endl;
-			exit(1);
-		}
-		if (!outfile)
-		{
-			cout << "Unable to write the file. Exit" << endl;
 			exit(1);
 		}
 		buffer.assign(istreambuf_iterator<char>(infile), istreambuf_iterator<char>());
@@ -104,28 +98,20 @@ int main(int argc,char** argv)
 				if (ss.Fill(0))
 				{
 					//$to do: find an efficent way to output to file
-					int m = 0;
-					char temp[325];
-					for (int j = 0; j < 81; j++, m+=2)
+					for (int j = 0; j < 81; j++)
 					{
-						temp[m] = ss.getPuzzle()[j] + '0';
-						//outfile << ss.getPuzzle()[j];
+						outfile << ss.getPuzzle()[j];
 						if ((j + 1) % 9 == 0)
 						{
-							temp[m + 1] = '\n';
-							//outfile << '\n';
+							outfile << '\n';
 							continue;
 						}
 						if (j < 81)
 						{
-							temp[m + 1] = ' ';
-							//outfile << ' ';
+							outfile << ' ';
 						}
 					}
-					temp[m] = '\n';
-					temp[m + 1] = '\0';
-					outfile.write(temp, strlen(temp));
-					//outfile << '\n';
+					outfile << '\n';
 				}
 				memset(bufferFlag, 0, sizeof(int) * 81);
 				memset(bufferMartix, 0, sizeof(int) * 81);
@@ -149,7 +135,7 @@ int main(int argc,char** argv)
 		filepath = argv[2];
 
 		fstream infile(filepath.c_str());
-		fstream outfile(filepath.c_str());
+		ofstream outfile(filepath.c_str());
 		if (!infile)
 		{
 			cout << "Unable to open the file. Exit" << endl;

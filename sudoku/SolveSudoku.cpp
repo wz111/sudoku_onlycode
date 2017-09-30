@@ -37,7 +37,7 @@ int SolveSudoku::NumTransfor(int a)
 	{
 	case 1:
 		temp = NUM1;
-		break;  
+		break;
 	case 2:
 		temp = NUM2;
 		break;

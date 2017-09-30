@@ -5,7 +5,6 @@
 #include "algorithm"
 #include "iostream"
 #include "fstream"
-#include "set"
 
 using namespace std;
 
@@ -44,99 +43,163 @@ int* EndProducer::getInitialSeed()
 	return _initialSeed;
 }
 
-void EndProducer::RowSwap(int* srcMartix, int Type, int* rank) 
+int* EndProducer::Row123(int* a)
 {
-	int ranktemp[3] = { 0 };
-	for (int i = 0; i < 3; i++) {
-		ranktemp[i] = rank[i];
+	return a;
+}
+
+int* EndProducer::Row132(int* a)
+{
+	int top = (2 - 1)*NUM_ROW;
+	int end = (3 - 1)*NUM_ROW;
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top+i], &a[end+i]);
 	}
-	while (ranktemp[0] !=  Type || ranktemp[1] != Type + 1 || ranktemp[2] != Type + 2)
-	{
-		if (ranktemp[0] != Type) {
-			if (ranktemp[1] == Type)
-			{
-				int top = (ranktemp[0] - 1)*NUM_ROW;
-				int end = (ranktemp[1] - 1)*NUM_ROW;
+	return a;
+}
 
-				for (int i = 0; i < NUM_ROW; i++) {
-					Swap(&srcMartix[top + i], &srcMartix[end + i]);
-				}
-				int temp = ranktemp[0];
-				ranktemp[0] = ranktemp[1];
-				ranktemp[1] = temp;
-				continue;
-			}
-			else if (ranktemp[2] == Type)
-			{
-				int top = (ranktemp[0] - 1)*NUM_ROW;
-				int end = (ranktemp[2] - 1)*NUM_ROW;
+int* EndProducer::Row456(int* a)
+{
+	return a;
+}
 
-				for (int i = 0; i < NUM_ROW; i++) {
-					Swap(&srcMartix[top + i], &srcMartix[end + i]);
-				}
-				int temp = ranktemp[0];
-				ranktemp[0] = ranktemp[2];
-				ranktemp[2] = temp;
-				continue;
-			}
-		}
-		if (ranktemp[1] != Type + 1) {
-			if (ranktemp[0] == Type + 1)
-			{
-				int top = (ranktemp[0] - 1)*NUM_ROW;
-				int end = (ranktemp[1] - 1)*NUM_ROW;
+int* EndProducer::Row465(int* a)
+{
+	int top = (5 - 1)*NUM_ROW;
+	int end = (6 - 1)*NUM_ROW;
 
-				for (int i = 0; i < NUM_ROW; i++) {
-					Swap(&srcMartix[top + i], &srcMartix[end + i]);
-				}
-				int temp = ranktemp[0];
-				ranktemp[0] = ranktemp[1];
-				ranktemp[1] = temp;
-				continue;
-			}
-			else if (ranktemp[2] == Type + 1)
-			{
-				int top = (ranktemp[1] - 1)*NUM_ROW;
-				int end = (ranktemp[2] - 1)*NUM_ROW;
-
-				for (int i = 0; i < NUM_ROW; i++) {
-					Swap(&srcMartix[top + i], &srcMartix[end + i]);
-				}
-				int temp = ranktemp[1];
-				ranktemp[1] = ranktemp[2];
-				ranktemp[2] = temp;
-				continue;
-			}
-		}
-		if (ranktemp[2] != Type + 2) {
-			if (ranktemp[0] == Type + 2)
-			{
-				int top = (ranktemp[0] - 1)*NUM_ROW;
-				int end = (ranktemp[2] - 1)*NUM_ROW;
-
-				for (int i = 0; i < NUM_ROW; i++) {
-					Swap(&srcMartix[top + i], &srcMartix[end + i]);
-				}
-				int temp = ranktemp[0];
-				ranktemp[0] = ranktemp[2];
-				ranktemp[2] = temp;
-				continue;
-			}
-			else if (ranktemp[1] == Type + 2)
-			{
-				int top = (ranktemp[2] - 1)*NUM_ROW;
-				int end = (ranktemp[1] - 1)*NUM_ROW;
-
-				for (int i = 0; i < NUM_ROW; i++) {
-					Swap(&srcMartix[top + i], &srcMartix[end + i]);
-				}
-				int temp = ranktemp[1];
-				ranktemp[1] = ranktemp[2];
-				ranktemp[2] = temp;
-				continue;
-			}
-		}
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
 	}
+	return a;
+}
+
+int* EndProducer::Row546(int* a)
+{
+	int top = (4 - 1)*NUM_ROW;
+	int end = (5 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	return a;
+}
+
+int* EndProducer::Row564(int* a)
+{
+	int top = (4 - 1)*NUM_ROW;
+	int end = (5 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	top = (5 - 1)*NUM_ROW;
+	end = (6 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	return a;
+}
+
+int* EndProducer::Row645(int* a)
+{
+	int top = (4 - 1)*NUM_ROW;
+	int end = (6 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	top = (5 - 1)*NUM_ROW;
+	end = (6 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	return a;
+}
+
+int* EndProducer::Row654(int* a)
+{
+	int top = (4 - 1)*NUM_ROW;
+	int end = (6 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	return a;
+}
+
+int* EndProducer::Row789(int* a)
+{
+	return a;
+}
+
+int* EndProducer::Row798(int* a)
+{
+	int top = (8 - 1)*NUM_ROW;
+	int end = (9 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	return a;
+}
+
+int* EndProducer::Row879(int* a)
+{
+	int top = (7 - 1)*NUM_ROW;
+	int end = (8 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	return a;
+}
+
+int* EndProducer::Row897(int* a)
+{
+	int top = (7 - 1)*NUM_ROW;
+	int end = (8 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	top = (8 - 1)*NUM_ROW;
+	end = (9 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	return a;
+}
+
+int* EndProducer::Row978(int* a)
+{
+	int top = (7 - 1)*NUM_ROW;
+	int end = (9 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	top = (8 - 1)*NUM_ROW;
+	end = (9 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+	return a;
+}
+
+int* EndProducer::Row987(int* a)
+{
+	int top = (7 - 1)*NUM_ROW;
+	int end = (9 - 1)*NUM_ROW;
+
+	for (int i = 0; i < NUM_ROW; i++) {
+		Swap(&a[top + i], &a[end + i]);
+	}
+    return a;
 }
 
 void EndProducer::IndexSubstitution(int* seed, int* a, int* b, int len)
@@ -168,35 +231,23 @@ void EndProducer::SeedInitialRandom()
 			_initialSeed[i] = b;
 		}
 	}
+	//return _initialSeed;
 }
 
-void EndProducer::SudokuCheck(char temp[])
+/*
+void EndProducer::SetOriginMartix(int* seed)
+//$todo: Sorting out the logic of two-dimensional arrays and double pointers(2017/09/22 01:34:36)
 {
-	string a(temp);
-	endSet.insert(a);
+	_originalMartix = IndexSubstitution(seed, _ancestorMartix);
 }
-int EndProducer::getendSetNum() 
-{
-	return endSet.size();
-}
+*/
 
-void EndProducer::MainOperation(bool checkOption)
+void EndProducer::MainOperation()
 {
-	int rank123[3] = { 1,2,3 };
-	int rank132[3] = { 1,3,2 };
-	int rank456[3] = { 4,5,6 };
-	int rank465[3] = { 4,6,5 };
-	int rank546[3] = { 5,4,6 };
-	int rank564[3] = { 5,6,4 };
-	int rank645[3] = { 6,4,5 };
-	int rank654[3] = { 6,5,4 };
-	int rank789[3] = { 7,8,9 };
-	int rank798[3] = { 7,9,8 };
-	int rank879[3] = { 8,7,9 };
-	int rank897[3] = { 8,9,7 };
-	int rank978[3] = { 9,7,8 };
-	int rank987[3] = { 9,8,7 };
-
+	int OriMartixCopy[81] = { 0 };
+	int* MiddleMartix1 = NULL;
+	int* MiddleMartix2 = NULL;
+	int* EndMartix = NULL;
 	int palaceVary1 = 0;
 	int palaceVary2 = 0;
 	int palaceVary3 = 0;
@@ -204,11 +255,9 @@ void EndProducer::MainOperation(bool checkOption)
 	int martixCount = 0;
 	
 	FILE* outfile;
-	//FILE* readfile;
-	errno_t err1;
-	//errno_t err2;
+	errno_t err;
 	
-	if ((err1 = fopen_s(&outfile, "sudoku.txt", "w")) != 0)
+	if ((err = fopen_s(&outfile, "sudoku.txt", "w")) != 0)
 	{
 		printf("Unable to open sudoku.txt\n");
 		exit(1);
@@ -220,22 +269,23 @@ void EndProducer::MainOperation(bool checkOption)
 	*/
 	SeedInitialRandom();
 	IndexSubstitution(_initialSeed, _ancestorMartix, _originalMartix, NUM_POINT);
+	//_originalMartix = _ancestorMartix;
 	
 	do 
 	{
+		//OriMartixCopy = _originalMartix;
 		int paramArray[MAX_NUM_ROWSUB] = { 0 };
 		int count = 0;
 		int OriMarRowCopy[81] = { 0 };
-		int OriMartixCopy[81] = { 0 };
-		IndexSubstitution(_seed, _originalMartix, OriMartixCopy, NUM_POINT);
+		memcpy(OriMartixCopy, _originalMartix, sizeof(int) * 81);
+		//OriMartixCopy = _originalMartix;
+		IndexSubstitution(_seed, OriMartixCopy, OriMartixCopy, NUM_POINT);
+		//$to do: figure out the reason of the srand() cost tooooooooo much time!!!
 		srand((unsigned)time(NULL));
 
 		for (int i = 0; i < MAX_NUM_ROWSUB && martixCount < Nums ; i++) 
 		{
-			for (int i = 0; i < 81; i++) 
-			{
-				OriMarRowCopy[i] = OriMartixCopy[i];
-			}
+			memcpy(OriMarRowCopy, OriMartixCopy, sizeof(int) * 81);
 			palaceVary1 = (rand() % 2) + 1;
 			palaceVary2 = (rand() % 6) + 1;
 			palaceVary3 = (rand() % 6) + 1;
@@ -252,10 +302,10 @@ void EndProducer::MainOperation(bool checkOption)
 			switch (palaceVary1)
 			{
 			case 1:
-				RowSwap(OriMarRowCopy, Type123, rank123);
+				MiddleMartix1 = Row123(OriMarRowCopy);
 				break;
 			case 2:
-				RowSwap(OriMarRowCopy, Type123, rank132);
+				MiddleMartix1 = Row132(OriMarRowCopy);
 				break;
 			default:
 				cout << "Error1" << endl;
@@ -264,22 +314,22 @@ void EndProducer::MainOperation(bool checkOption)
 			switch (palaceVary2)
 			{
 			case 1:
-				RowSwap(OriMarRowCopy, Type456, rank456);
+				MiddleMartix2 = Row456(MiddleMartix1);
 				break;
 			case 2:
-				RowSwap(OriMarRowCopy, Type456, rank465);
+				MiddleMartix2 = Row465(MiddleMartix1);
 				break;
 			case 3:
-				RowSwap(OriMarRowCopy, Type456, rank546);
+				MiddleMartix2 = Row546(MiddleMartix1);
 				break;
 			case 4:
-				RowSwap(OriMarRowCopy, Type456, rank564);
+				MiddleMartix2 = Row564(MiddleMartix1);
 				break; 
 			case 5:
-				RowSwap(OriMarRowCopy, Type456, rank645);
+				MiddleMartix2 = Row645(MiddleMartix1);
 				break;
 			case 6:
-				RowSwap(OriMarRowCopy, Type456, rank654);
+				MiddleMartix2 = Row654(MiddleMartix1);
 				break;
 			default:
 				cout << "Error2" << endl;
@@ -288,22 +338,22 @@ void EndProducer::MainOperation(bool checkOption)
 			switch (palaceVary3)
 			{
 			case 1:
-				RowSwap(OriMarRowCopy, Type789, rank789);
+				EndMartix = Row789(MiddleMartix2);
 				break;
 			case 2:
-				RowSwap(OriMarRowCopy, Type789, rank798);
+				EndMartix = Row798(MiddleMartix2);
 				break;
 			case 3:
-				RowSwap(OriMarRowCopy, Type789, rank879);
+				EndMartix = Row879(MiddleMartix2);
 				break;
 			case 4:
-				RowSwap(OriMarRowCopy, Type789, rank897);
+				EndMartix = Row897(MiddleMartix2);
 				break;
 			case 5:
-				RowSwap(OriMarRowCopy, Type789, rank978);
+				EndMartix = Row978(MiddleMartix2);
 				break;
 			case 6:
-				RowSwap(OriMarRowCopy, Type789, rank987);
+				EndMartix = Row987(MiddleMartix2);
 				break;
 			default:
 				cout << "Error3" << endl;
@@ -314,7 +364,7 @@ void EndProducer::MainOperation(bool checkOption)
 			char temp[325];
 			for(int j = 0 ; j < NUM_POINT ; j++, m+=2)
 			{
-				temp[m] = OriMarRowCopy[j] + '0';
+				temp[m] = EndMartix[j] + '0';
 				if ((j + 1) % 9 == 0) 
 				{
 					temp[m + 1] = '\n';
@@ -324,10 +374,7 @@ void EndProducer::MainOperation(bool checkOption)
 			}
 			temp[m] = '\n';
 			temp[m + 1] = '\0';
-			std::fputs(temp, outfile);
-			if (checkOption) {
-				SudokuCheck(temp);
-			}
+			fputs(temp, outfile);
 			/*for(int j = 0;j<NUM_POINT;j++)
 			{
 				out << EndMartix[j];
@@ -344,19 +391,7 @@ void EndProducer::MainOperation(bool checkOption)
 			}*/
 			martixCount++;
 		}
-		
 	} while (next_permutation(_seed, _seed + 8) && martixCount < Nums );
+	//fclose(outfile);
 
-	std::fclose(outfile);
-	if (checkOption) {
-		if (Nums != getendSetNum())
-		{
-			cout << "duplicate" << endl;
-		}
-		else
-		{
-			cout << "not duplicate" << endl;
-		}
-	}
-	else;
 }
